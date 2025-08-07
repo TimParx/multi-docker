@@ -15,10 +15,18 @@ after_success:
   - docker build -t TimParx/multi-nginx ./nginx
   - docker build -t TimParx/multi-server ./server
   - docker build -t TimParx/multi-worker ./worker
+
+  # Tag images explicitly with :latest
+  - docker tag TimParx/multi-client docker.io/TimParx/multi-client:latest
+  - docker tag TimParx/multi-nginx docker.io/TimParx/multi-nginx:latest
+  - docker tag TimParx/multi-server docker.io/TimParx/multi-server:latest
+  - docker tag TimParx/multi-worker docker.io/TimParx/multi-worker:latest
+
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # Take those images and push them to docker hub 
-  - docker push TimParx/multi-client
-  - docker push TimParx/multi-nginx
-  - docker push TimParx/multi-server
-  - docker push TimParx/multi-worker
+  - docker push docker.io/TimParx/multi-client:latest
+  - docker push docker.io/TimParx/multi-nginx:latest
+  - docker push docker.io/TimParx/multi-server:latest
+  - docker push docker.io/TimParx/multi-worker:latest
+
