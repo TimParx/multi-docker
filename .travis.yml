@@ -5,28 +5,28 @@ services:
   - docker
 
 before_install:
-  - docker build -t TimParx/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t timparx/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true TimParx/react-test npm test
+  - docker run -e CI=true timparx/react-test npm test
 
 after_success:
-  - docker build -t TimParx/multi-client ./client
-  - docker build -t TimParx/multi-nginx ./nginx
-  - docker build -t TimParx/multi-server ./server
-  - docker build -t TimParx/multi-worker ./worker
+  - docker build -t timparx/multi-client ./client
+  - docker build -t timparx/multi-nginx ./nginx
+  - docker build -t timparx/multi-server ./server
+  - docker build -t timparx/multi-worker ./worker
 
   # Tag images explicitly with :latest
-  - docker tag TimParx/multi-client docker.io/TimParx/multi-client:latest
-  - docker tag TimParx/multi-nginx docker.io/TimParx/multi-nginx:latest
-  - docker tag TimParx/multi-server docker.io/TimParx/multi-server:latest
-  - docker tag TimParx/multi-worker docker.io/TimParx/multi-worker:latest
+  - docker tag timparx/multi-client docker.io/timparx/multi-client:latest
+  - docker tag timparx/multi-nginx docker.io/timparx/multi-nginx:latest
+  - docker tag timparx/multi-server docker.io/timparx/multi-server:latest
+  - docker tag timparx/multi-worker docker.io/timparx/multi-worker:latest
 
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # Take those images and push them to docker hub 
-  - docker push docker.io/TimParx/multi-client:latest
-  - docker push docker.io/TimParx/multi-nginx:latest
-  - docker push docker.io/TimParx/multi-server:latest
-  - docker push docker.io/TimParx/multi-worker:latest
+  - docker push docker.io/timparx/multi-client:latest
+  - docker push docker.io/timparx/multi-nginx:latest
+  - docker push docker.io/timparx/multi-server:latest
+  - docker push docker.io/timparx/multi-worker:latest
 
