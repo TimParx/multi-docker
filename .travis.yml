@@ -30,3 +30,14 @@ after_success:
   - docker push docker.io/timparx/multi-server:latest
   - docker push docker.io/timparx/multi-worker:latest
 
+deploy:
+  provider: elasticbeanstalk
+  region: eu-north-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-eu-north-1-302001396912
+  bucket_path: multi-docker
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
