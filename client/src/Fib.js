@@ -20,9 +20,13 @@ class Fib extends Component {
 
   async fetchIndexes() {
     const seenIndexes = await axios.get('/api/values/all');
-    this.setState({
-      seenIndexes: seenIndexes.data,
-    });
+
+    // Bezpieczne przekształcenie danych na tablicę
+    const data = Array.isArray(seenIndexes.data)
+      ? seenIndexes.data
+      : Object.values(seenIndexes.data);
+
+    this.setState({ seenIndexes: data });
   }
 
   handleSubmit = async (event) => {
@@ -35,7 +39,13 @@ class Fib extends Component {
   };
 
   renderSeenIndexes() {
-    return this.state.seenIndexes.map(({ number }) => number).join(', ');
+    const { seenIndexes } = this.state;
+
+    if (!Array.isArray(seenIndexes) || seenIndexes.length === 0) {
+      return 'No indexes yet.';
+    }
+
+    return seenIndexes.map(({ number }) => number).join(', ');
   }
 
   renderValues() {
